@@ -85,6 +85,13 @@ import table from "sharp-echonet/table" with { type: "json" };
 Porting it to another language is a short job, which is why it is data rather
 than code.
 
+Where there is no UDP, such as an edge runtime, fetch the bytes elsewhere and
+unpack them through the decode-only entry point, which pulls in no node built-ins:
+
+```ts
+import { decodeAll, waterTankEmpty } from "sharp-echonet/decode";
+```
+
 ## Confidence
 
 Fields carry a confidence level, and `read` returns only `confirmed` ones unless

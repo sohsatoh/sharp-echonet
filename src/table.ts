@@ -1,5 +1,4 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { tableData } from "./table.data.ts";
 
 /**
  * How much weight a field carries.
@@ -54,9 +53,12 @@ export interface Table {
   traps: { where: string; claim?: string; reality: string }[];
 }
 
-const tablePath = fileURLToPath(new URL("../data/ki-ux75.json", import.meta.url));
-
-export const table: Table = JSON.parse(readFileSync(tablePath, "utf8")) as Table;
+/**
+ * data/ki-ux75.json is the source of truth. This reads the TypeScript generated
+ * from it rather than the file itself, so that decoding works where there is no
+ * filesystem.
+ */
+export const table: Table = tableData;
 
 /** Every field of one property, in byte order. */
 export function fieldsOf(epc: number): FieldSpec[] {
@@ -78,6 +80,6 @@ export function matchesProductCode(productCode: Uint8Array | string): boolean {
   const hex =
     typeof productCode === "string"
       ? productCode.toLowerCase()
-      : Buffer.from(productCode).toString("hex");
+      : [...productCode].map((b) => b.toString(16).padStart(2, "0")).join("");
   return hex.startsWith(table.productCode);
 }

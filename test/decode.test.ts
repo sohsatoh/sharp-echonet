@@ -109,3 +109,12 @@ test("every trap in the table names what it actually is", () => {
   assert.ok(table.traps.length >= 5);
   for (const trap of table.traps) assert.ok(trap.where && trap.reality);
 });
+
+// data/ki-ux75.json is the source of truth and src/table.data.ts is generated
+// from it. A stale copy would ship offsets nobody reviewed.
+test("the generated table matches the json it comes from", () => {
+  const json = JSON.parse(
+    readFileSync(fileURLToPath(new URL("../data/ki-ux75.json", import.meta.url)), "utf8"),
+  );
+  assert.deepEqual(table, json);
+});

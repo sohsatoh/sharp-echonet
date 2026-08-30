@@ -1,0 +1,357 @@
+// Generated. Do not edit. Change data/ki-ux75.json and run npm run gen.
+import type { Table } from "./table.ts";
+
+export const tableData = {
+  "model": "KIUX75",
+  "productCode": "4b4955583735",
+  "firmware": [
+    "SHARP_B02"
+  ],
+  "eoj": "0x013501",
+  "standardVersion": "I",
+  "note": "Field offsets for the vendor-specific properties of the Sharp KI-UX75 humidifying air purifier. Confirmed against two units. Offsets are byte positions inside the EDT of the given EPC.",
+  "spec": {
+    "hasDustSensor": true,
+    "hasPM25Sensor": false,
+    "hasCO2Sensor": false,
+    "hasLightSensor": true,
+    "hasHumidFunc": true,
+    "dustFilterLimit": 3000
+  },
+  "standardProperties": {
+    "0x80": {
+      "name": "operationStatus",
+      "note": "0x30 on, 0x31 off. Readable and writable."
+    },
+    "0x84": {
+      "name": "instantaneousPower",
+      "unit": "W",
+      "size": 2
+    },
+    "0x88": {
+      "name": "faultStatus",
+      "note": "0x41 fault, 0x42 normal"
+    },
+    "0xA0": {
+      "name": "airFlowRate",
+      "note": "Writes are acknowledged with ESV 0x71 and then ignored. Power draw does not change."
+    },
+    "0xC0": {
+      "name": "airPollutionDetected",
+      "note": "0x41 detected, 0x42 not detected"
+    }
+  },
+  "properties": {
+    "0xF1": {
+      "length": 43,
+      "fields": [
+        {
+          "offset": 2,
+          "size": 1,
+          "name": "brightnessRaw",
+          "type": "uint",
+          "confidence": "confirmed",
+          "note": "Not lux. A non-linear 0-255 scale: 199-202 fully lit, 145 at dusk with no lights, 0 in the dark. The vendor app does not read this byte; it uses the three-level flag at offset 8 instead."
+        },
+        {
+          "offset": 3,
+          "size": 1,
+          "name": "roomTemperature",
+          "type": "uint",
+          "unit": "degC",
+          "vendorSlot": "k1.s1",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "name": "roomHumidity",
+          "type": "uint",
+          "unit": "%",
+          "vendorSlot": "k1.s2",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 8,
+          "size": 1,
+          "name": "lightingLevel",
+          "type": "bits",
+          "bits": "high 4",
+          "vendorSlot": "k1.s15",
+          "confidence": "confirmed",
+          "note": "The vendor app reads the top four bits and maps them to off / dark / bright."
+        },
+        {
+          "offset": 11,
+          "size": 4,
+          "name": "totalOperatingTime",
+          "type": "uint",
+          "unit": "minutes",
+          "vendorSlot": "k1.s3",
+          "confidence": "confirmed",
+          "note": "Advanced by exactly 30 across a 30 minute gap."
+        },
+        {
+          "offset": 15,
+          "size": 2,
+          "name": "pciUnit1Used",
+          "type": "uint",
+          "vendorSlot": "k1.s4",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 17,
+          "size": 2,
+          "name": "pciUnit2Used",
+          "type": "uint",
+          "vendorSlot": "k1.s5",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 21,
+          "size": 4,
+          "name": "cadrUsed",
+          "type": "uint",
+          "vendorSlot": "k1.s6",
+          "confidence": "confirmed",
+          "note": "Cumulative volume of air cleaned. Rises monotonically."
+        },
+        {
+          "offset": 27,
+          "size": 2,
+          "name": "pm25Value",
+          "type": "uint",
+          "vendorSlot": "k1.s7",
+          "confidence": "offset-confirmed",
+          "usable": false,
+          "note": "The vendor app calls this pm25Value but gates it on hasPM25Sensor, which is false for this model. The bytes move, but do not publish them as a PM2.5 reading."
+        },
+        {
+          "offset": 29,
+          "size": 2,
+          "name": "dustFilterUsed",
+          "type": "uint",
+          "vendorSlot": "k1.s8",
+          "confidence": "confirmed",
+          "note": "Compare against spec.dustFilterLimit for remaining life."
+        },
+        {
+          "offset": 31,
+          "size": 2,
+          "name": "smellFilterUsed",
+          "type": "uint",
+          "vendorSlot": "k1.s9",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 35,
+          "size": 2,
+          "name": "humidFilterUsed",
+          "type": "uint",
+          "vendorSlot": "k1.s10",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 37,
+          "size": 1,
+          "name": "agIonFilterUsed",
+          "type": "uint",
+          "vendorSlot": "k1.s11",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 38,
+          "size": 2,
+          "name": "totalHumidificationAmount",
+          "type": "uint",
+          "vendorSlot": "k1.s12",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 40,
+          "size": 3,
+          "name": "numberOfParticles",
+          "type": "uint",
+          "unit": "particles/L",
+          "vendorSlot": "k1.s14",
+          "confidence": "confirmed",
+          "note": "Matched the vendor's own figure at an aligned timestamp, then again on the second unit."
+        }
+      ],
+      "unresolved": [
+        {
+          "vendorSlot": "k1.s13",
+          "name": "co2Concentration",
+          "note": "This model has no CO2 sensor, so the field is always zero and its offset cannot be pinned."
+        }
+      ]
+    },
+    "0xF2": {
+      "length": 41,
+      "fields": [
+        {
+          "offset": 16,
+          "size": 1,
+          "name": "pm25Level",
+          "type": "uint",
+          "vendorSlot": "k2.s3",
+          "confidence": "confirmed",
+          "usable": false,
+          "note": "Tracked the vendor value across four timestamps. Still gated on hasPM25Sensor for this model."
+        },
+        {
+          "offset": 17,
+          "size": 1,
+          "name": "airSummaryLevel",
+          "type": "uint",
+          "vendorSlot": "k2.s4",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 18,
+          "size": 1,
+          "name": "humidIconStatus",
+          "type": "uint",
+          "vendorSlot": "k2.s5",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 19,
+          "size": 1,
+          "name": "waterPresent",
+          "type": "flag",
+          "trueValue": "0xff",
+          "vendorSlot": "k2.s6",
+          "confidence": "confirmed",
+          "note": "0xff while the machine has water, 0x00 once it wants a refill. This is the only slot in the group that the vendor app never reads, and no vendor screen shows a refill state. Treat anything other than 0xff as empty so that an unseen third value does not fail silent."
+        },
+        {
+          "offset": 20,
+          "size": 1,
+          "name": "lightSensorFlag",
+          "type": "flag",
+          "trueValue": "0xff",
+          "vendorSlot": "k2.s7",
+          "confidence": "confirmed",
+          "note": "0xff in a lit room, 0x00 in the dark."
+        },
+        {
+          "offset": 24,
+          "size": 1,
+          "name": "humidButtonStatus",
+          "type": "uint",
+          "vendorSlot": "k2.s11",
+          "confidence": "confirmed",
+          "note": "Changed from 0x00 to 0x81 at the moment humidification was switched back on."
+        },
+        {
+          "offset": 25,
+          "size": 1,
+          "name": "pciVisible",
+          "type": "uint",
+          "vendorSlot": "k2.s12",
+          "confidence": "confirmed"
+        },
+        {
+          "offset": 14,
+          "size": 1,
+          "name": "smellLevel",
+          "type": "uint",
+          "vendorSlot": "k2.s1",
+          "confidence": "probable",
+          "note": "Placed by the ordering that holds for slots 3 through 12. Not observed changing."
+        },
+        {
+          "offset": 15,
+          "size": 1,
+          "name": "dustLevel",
+          "type": "uint",
+          "vendorSlot": "k2.s2",
+          "confidence": "probable",
+          "note": "Same reasoning as smellLevel."
+        }
+      ],
+      "unresolved": [
+        {
+          "vendorSlot": "k2.s13 - k2.s17",
+          "note": "Slots 1 through 12 sit at offsets 14 through 25 in order, but slot 16 (volumeSetting) does not land where that run predicts, so the tail is laid out differently. Left unresolved rather than guessed."
+        }
+      ]
+    },
+    "0xF3": {
+      "length": 27,
+      "fields": [
+        {
+          "offset": 15,
+          "size": 1,
+          "name": "humidificationEnabled",
+          "type": "flag",
+          "trueValue": "0xff",
+          "confidence": "confirmed",
+          "note": "The setting, not whether the machine is humidifying right now. A unit with an empty tank still reports 0xff while the setting is on. Writes are not reflected."
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "name": "driveState",
+          "type": "uint",
+          "vendorSlot": "k3.s1",
+          "confidence": "probable",
+          "note": "The vendor app reads this slot for drive mode, running state and dust filter life."
+        }
+      ],
+      "unresolved": [
+        {
+          "vendorSlot": "k3.s2",
+          "offset": 8,
+          "note": "The vendor app reads this slot, but what it means is not established."
+        },
+        {
+          "vendorSlot": "k3.s6",
+          "offset": 13,
+          "note": "Position matched on a single snapshot. Meaning unknown."
+        },
+        {
+          "vendorSlot": "rest of 0xF3",
+          "note": "Matched from a single snapshot where most bytes were zero."
+        }
+      ]
+    },
+    "0xF4": {
+      "note": "Every byte was zero on both units across every reading."
+    }
+  },
+  "traps": [
+    {
+      "where": "0xF3[5]",
+      "claim": "Looks like a water or mode flag: 0x00 on one unit and 0x01 on the other.",
+      "reality": "A per-unit constant. It did not move when the tank was refilled or when humidification was switched on and off."
+    },
+    {
+      "where": "0xF2[39]",
+      "claim": "Same shape, 0x00 against 0x01 between units.",
+      "reality": "Also a per-unit constant."
+    },
+    {
+      "where": "0xF1[42]",
+      "claim": "Drifts constantly and never returns, so it reads as noise.",
+      "reality": "The low byte of the three byte particle count at offset 40. Read the whole field."
+    },
+    {
+      "where": "0xF1[14]",
+      "reality": "Increments once a minute."
+    },
+    {
+      "where": "0xF1[24]",
+      "reality": "Increments roughly every 43 seconds."
+    },
+    {
+      "where": "0xA0",
+      "reality": "The device answers a write with ESV 0x71 and then ignores it. Instantaneous power does not budge."
+    },
+    {
+      "where": "humidifier class 0x0139",
+      "reality": "The standard defines a six step water level at EPC 0xC5, but this unit lists only 0x013501 in its instance list and does not answer that object at all."
+    }
+  ]
+} as unknown as Table;
