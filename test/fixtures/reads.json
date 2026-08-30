@@ -1,0 +1,49 @@
+{
+  "note": "Real reads from two KI-UX75 units. Only the property payloads are kept.",
+  "samples": {
+    "tankEmpty": {
+      "note": "Tank had been empty for some time.",
+      "props": {
+        "F1": "6400c91c33040000f900000004f2c91527152701d4000dc02e00000001024002400000009b9b00ec000138",
+        "F2": "0c00000000000000000000000000000000000200ff00000080ff00200100000000000000000000000a",
+        "F3": "0000000020000000c000000000ff00ff00000000000000000000f0"
+      }
+    },
+    "tankFilled": {
+      "note": "Same unit, moments after a refill, humidification still off.",
+      "props": {
+        "F1": "6200c91c33030000f900000004f2d61527152701d4000dc04300000000024002400000009b9b00ec0000c4",
+        "F2": "0c000000000000000000000000000000000002ffff00000000ff002001000000000000000000000000",
+        "F3": "0000000020000000c000000000ff000000000000000000000000f0"
+      }
+    },
+    "unitA": {
+      "note": "Aligned with the vendor's own field view at the same timestamp.",
+      "props": {
+        "F1": "6201c91c35050000f900000004f3531529152901d6000dc10500000005024002400000009b9b00ec00044d",
+        "F2": "0c000000000000000000000000000000000002ffff00000000ff002001000000000000000000000014",
+        "F3": "0000000020000000c000000000ff000000000000000000000000f0"
+      },
+      "expect": {
+        "roomTemperature": 28,
+        "roomHumidity": 53,
+        "numberOfParticles": 1101,
+        "totalOperatingTime": 324435
+      }
+    },
+    "unitB": {
+      "note": "Second unit, different time.",
+      "props": {
+        "F1": "6400c61b360b0000f900000004d78e14b214b20241000b398a0f00000101710171000000787800b0000143",
+        "F2": "00040000000000000000000000000000000001ffff00000081ff00200100000000000000000000010a",
+        "F3": "0000000020010000c000000000ff00ff00000000000000000000f0"
+      },
+      "expect": {
+        "roomTemperature": 27,
+        "roomHumidity": 54,
+        "numberOfParticles": 323,
+        "totalOperatingTime": 317326
+      }
+    }
+  }
+}

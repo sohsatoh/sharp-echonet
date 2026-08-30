@@ -1,0 +1,47 @@
+{
+  "name": "sharp-echonet",
+  "version": "0.1.0",
+  "description": "Decode the vendor-specific ECHONET Lite properties of Sharp humidifying air purifiers over the local network",
+  "keywords": [
+    "echonet",
+    "echonet-lite",
+    "sharp",
+    "air-purifier",
+    "ki-ux75",
+    "smart-home"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./table": "./data/ki-ux75.json"
+  },
+  "bin": {
+    "sharp-echonet": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "data",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test --experimental-strip-types test/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint:text": "textlint '**/*.md'",
+    "check": "npm run typecheck && npm run test && npm run lint:text"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "textlint": "^15.8.0",
+    "textlint-rule-preset-ai-writing": "^1.1.0",
+    "typescript": "^5.7.2"
+  }
+}
