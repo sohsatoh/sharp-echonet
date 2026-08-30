@@ -44,7 +44,8 @@
     "gen": "node scripts/gen-table.mjs",
     "prebuild": "npm run gen",
     "pretest": "npm run gen",
-    "prepublishOnly": "npm run check && npm run build"
+    "prepublishOnly": "npm run check",
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
